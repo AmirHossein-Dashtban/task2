@@ -1,0 +1,22 @@
+.button-card {
+    width: 100%;
+    min-width: 235px;
+    background-color: transparent;
+    height: 40px;
+    border-radius: 40px;
+    border-width: 1px;
+    border-color: var(--place-holder-color);
+    color: var(--bottom-text-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-style: solid;
+}
+
+.button-card:hover {
+    -webkit-box-shadow: 2px 7px 25px -3px rgb(46, 42, 55);
+    -moz-box-shadow: 2px 7px 25px -3px rgb(47, 42, 55);
+    box-shadow: 2px 7px 25px -3px rgb(52, 48, 62);
+}
