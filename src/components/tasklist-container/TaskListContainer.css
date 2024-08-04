@@ -1,0 +1,10 @@
+.tasklist-container {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.tasklist {
+	list-style-type: none;
+}

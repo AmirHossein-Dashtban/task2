@@ -1,0 +1,28 @@
+.box-header {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	width: 300px;
+}
+
+.box-header-v1 {
+	align-items: center;
+	display: flex;
+	width: 300px;
+}
+
+.box-header__right-icon,
+.box-header__left-icon {
+	align-items: center;
+	display: flex;
+	padding: 1rem;
+}
+
+.box-header__heading {
+	align-items: center;
+	display: flex;
+}
+
+.box-header__heading-text {
+	font-size: 24px;
+}
