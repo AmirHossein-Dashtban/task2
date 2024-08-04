@@ -9,7 +9,7 @@ const Login = () => {
         <Box>
             <BoxHeader headingText={'Task Manager'} />
 
-            <div>
+            <div className='inputs-container'>
                 <Input type={'text'} name={'username'} title={'Username'} />
                 <Input type={'password'} name={'password'} title={'Password'} className={'password-input'} />
             </div>
