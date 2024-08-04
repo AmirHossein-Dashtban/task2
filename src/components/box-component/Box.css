@@ -4,5 +4,12 @@
 	border-radius: 28px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: space-between;
+	padding-right: 40px;
+	padding-left: 40px;
+	min-height: 543px;
+	padding-bottom: 76px;
+	width: fit-content;
+	height: fit-content;
+	margin: auto;
 }

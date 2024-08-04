@@ -1,5 +1,8 @@
 import React from 'react';
+import './Box.css'
 
-export default function Box() {
-	return <section className="box">Box</section>;
+export default function Box({ children }) {
+	return <section className="box">
+		{children}
+	</section>;
 }

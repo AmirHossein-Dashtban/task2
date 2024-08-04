@@ -1,6 +1,6 @@
 .button-card {
     width: 100%;
-    min-width: 235px;
+    max-width: 235px;
     background-color: transparent;
     height: 40px;
     border-radius: 40px;
