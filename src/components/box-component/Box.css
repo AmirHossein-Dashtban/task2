@@ -1,0 +1,8 @@
+.box {
+	align-items: center;
+	background-color: var(--box-bg-color);
+	border-radius: 28px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
