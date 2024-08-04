@@ -1,0 +1,44 @@
+.input-card {
+    background-color: var(--input-bg-color);
+    width: 235px;
+    height: 56px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.input-card label {
+    color: var(--label-color);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.input-card input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--place-holder-color);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.input-card input::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.input-icon {
+    align-self: center;
+    font-size: 26px;
+    color: var(--place-holder-color);
+}
