@@ -1,30 +1,30 @@
 import React from 'react';
 import './App.css';
-import {
-	createBrowserRouter,
-	RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Tasks, CreateTask, EditTask, Login } from './pages';
-
 
 const router = createBrowserRouter([
 	{
-		path: "/login",
+		path: '/',
+		element: <Login />,
+	},
+	{
+		path: '/login',
 		element: <Login />,
 		// loader: rootLoader,
 	},
 	{
-		path: "/tasks",
+		path: '/tasks',
 		element: <Tasks />,
 		// loader: rootLoader,
 	},
 	{
-		path: "/createtask",
+		path: '/createtask',
 		element: <CreateTask />,
 		// loader: rootLoader,
 	},
 	{
-		path: "/edittask",
+		path: '/edittask',
 		element: <EditTask />,
 		// loader: rootLoader,
 	},
