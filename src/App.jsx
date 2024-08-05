@@ -14,17 +14,17 @@ const router = createBrowserRouter([
 		// loader: rootLoader,
 	},
 	{
-		path: '/tasks',
+		path: '/list',
 		element: <Tasks />,
 		// loader: rootLoader,
 	},
 	{
-		path: '/createtask',
+		path: '/create',
 		element: <CreateTask />,
 		// loader: rootLoader,
 	},
 	{
-		path: '/edittask',
+		path: '/edit',
 		element: <EditTask />,
 		// loader: rootLoader,
 	},
