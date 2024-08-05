@@ -3,7 +3,6 @@ import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
 import './login.css';
-import EmptyTaskList from '../../components/empty-tasklist/EmptyTaskList';
 
 const Login = () => {
 	return (
@@ -22,8 +21,6 @@ const Login = () => {
 				</div>
 
 				<Button text={'login'} type={'sumit'} />
-
-				<EmptyTaskList />
 			</Box>
 		</div>
 	);
