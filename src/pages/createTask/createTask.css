@@ -1,0 +1,11 @@
+.priority-input {
+    margin-top: 23px;
+}
+
+
+.inputs-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
