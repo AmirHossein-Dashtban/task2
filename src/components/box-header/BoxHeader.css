@@ -2,13 +2,7 @@
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	width: 300px;
-}
-
-.box-header-v1 {
-	align-items: center;
-	display: flex;
-	width: 300px;
+	width: 100%;
 }
 
 .box-header__right-icon,
