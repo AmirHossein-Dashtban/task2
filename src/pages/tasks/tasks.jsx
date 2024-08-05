@@ -26,7 +26,7 @@ export default function tasks() {
 
 				<TaskListContainer tasks={tasks}></TaskListContainer>
 
-				<Pagination />
+				{tasks.length !== 0 && <Pagination />}
 
 				<Button text={`Task`} icon={<Plus />} />
 			</Box>
