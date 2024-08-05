@@ -3,21 +3,30 @@ import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
 import './login.css';
+import EmptyTaskList from '../../components/empty-tasklist/EmptyTaskList';
 
 const Login = () => {
-    return <div style={{ display: 'flex', height: '100vh', width: '100vw' }}>
-        <Box>
-            <BoxHeader headingText={'Task Manager'} />
+	return (
+		<div style={{ display: 'flex', height: '100vh', width: '100vw' }}>
+			<Box>
+				<BoxHeader headingText={'Task Manager'} />
 
-            <div className='inputs-container'>
-                <Input type={'text'} name={'username'} title={'Username'} />
-                <Input type={'password'} name={'password'} title={'Password'} className={'password-input'} />
-            </div>
+				<div className="inputs-container">
+					<Input type={'text'} name={'username'} title={'Username'} />
+					<Input
+						type={'password'}
+						name={'password'}
+						title={'Password'}
+						className={'password-input'}
+					/>
+				</div>
 
-            <Button text={'login'} type={'sumit'} />
-        </Box>
+				<Button text={'login'} type={'sumit'} />
 
-    </div>
+				<EmptyTaskList />
+			</Box>
+		</div>
+	);
 };
 
 export default Login;
