@@ -1,11 +1,9 @@
 .input-card {
     background-color: var(--input-bg-color);
     width: 100%;
-    max-width: 235px;
+    min-width: 235px;
     height: 56px;
     max-height: 56px !important;
-    padding-left: 16px;
-    padding-right: 16px;
     display: flex;
     flex-direction: row;
 }
@@ -17,6 +15,8 @@
     padding-top: 8px;
     padding-bottom: 8px;
     flex: 1;
+    padding-left: 16px;
+    padding-right: 10px;
 }
 
 .input-card label {
@@ -26,13 +26,14 @@
 }
 
 .input-card input {
-    flex: 1;
     background-color: transparent;
     border: none;
     outline: none;
     color: var(--place-holder-color);
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
+    height: 16px;
+    margin-top: 4px;
 }
 
 .input-card input::placeholder {
@@ -42,6 +43,7 @@
 
 .input-icon {
     align-self: center;
-    font-size: 26px;
-    color: var(--place-holder-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
