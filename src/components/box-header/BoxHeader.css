@@ -8,6 +8,7 @@
 .box-header__right-icon,
 .box-header__left-icon {
 	align-items: center;
+	cursor: pointer;
 	display: flex;
 	padding: 1rem;
 }
@@ -19,4 +20,5 @@
 
 .box-header__heading-text {
 	font-size: 24px;
+	margin-right: 1rem;
 }
