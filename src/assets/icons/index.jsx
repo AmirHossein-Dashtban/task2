@@ -5,6 +5,7 @@ import PaginationArrowRightIcon from './paginaton-icons/ArrowRightIcon';
 import Plus from './plus';
 import Close from './close';
 import Password from './password';
+import Trash from './trash';
 
 export {
 	LogOutIcon,
@@ -13,5 +14,6 @@ export {
 	PaginationArrowRightIcon,
 	Plus,
 	Close,
-	Password
+	Password,
+	Trash
 };
