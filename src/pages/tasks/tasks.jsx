@@ -16,12 +16,7 @@ export default function tasks() {
 	return (
 		<section
 			className="page-container"
-			style={{
-				alignItems: 'center',
-				display: 'flex',
-				justifyContent: 'center',
-				width: '100%',
-			}}
+			style={{ display: 'flex', height: '100vh', width: '100vw' }}
 		>
 			<Box>
 				<BoxHeader
