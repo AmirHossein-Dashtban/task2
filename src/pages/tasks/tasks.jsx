@@ -26,9 +26,20 @@ export default function tasks() {
 
 				<TaskListContainer tasks={tasks}></TaskListContainer>
 
-				{tasks.length !== 0 && <Pagination />}
+				<div
+					style={{
+						alignItems: 'center',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						marginTop: '4rem',
+						width: '100%',
+					}}
+				>
+					{tasks.length !== 0 && <Pagination />}
 
-				<Button text={`Task`} icon={<Plus />} />
+					<Button text={`Task`} icon={<Plus />} />
+				</div>
 			</Box>
 		</section>
 	);
