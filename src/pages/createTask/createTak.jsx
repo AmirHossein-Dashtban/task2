@@ -6,53 +6,54 @@ import Button from '../../components/button/button';
 import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { ArrowRightIcon } from '../../assets/icons/index';
 
 const CreateTask = () => {
-    const navigation = useNavigate();
+	const navigation = useNavigate();
 
-    return <PageContainer>
-        <Formik
-            initialValues={{ name: '', priority: '' }}
-            onSubmit={(values, { setSubmitting }) => {
-                navigation('/list');
-            }}
-        >
-            {({
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                values
-            }) => (
-                <form onSubmit={handleSubmit}>
-                    <Box>
-                        <BoxHeader headingText={'Task Manager'} />
+	return (
+		<PageContainer>
+			<Formik
+				initialValues={{ name: '', priority: '' }}
+				onSubmit={(values, { setSubmitting }) => {
+					navigation('/list');
+				}}
+			>
+				{({ handleBlur, handleChange, handleSubmit, values }) => (
+					<form onSubmit={handleSubmit}>
+						<Box>
+							<BoxHeader
+								headingText={'Task Manager'}
+								rightIcon={[<ArrowRightIcon />, '/list']}
+							/>
 
-                        <div className='inputs-container'>
-                            <Input
-                                type={'text'}
-                                name={'name'}
-                                title={'name'}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.name}
-                            />
-                            <Input
-                                type={'text'}
-                                name={'priority'}
-                                title={'priority'}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.priority}
-                                className={'priority-input'} />
-                        </div>
+							<div className="inputs-container">
+								<Input
+									type={'text'}
+									name={'name'}
+									title={'name'}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									value={values.name}
+								/>
+								<Input
+									type={'text'}
+									name={'priority'}
+									title={'priority'}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									value={values.priority}
+									className={'priority-input'}
+								/>
+							</div>
 
-                        <Button text={'Create'} type={'sumit'} />
-                    </Box>
-
-                </form>
-            )}
-        </Formik>
-    </PageContainer >
+							<Button text={'Create'} type={'sumit'} />
+						</Box>
+					</form>
+				)}
+			</Formik>
+		</PageContainer>
+	);
 };
 
 export default CreateTask;
