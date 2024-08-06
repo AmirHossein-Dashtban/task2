@@ -10,27 +10,28 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const navigation = useNavigate();
+
 	return (
 		<PageContainer>
-
 			<Formik
 				initialValues={{ username: '', password: '' }}
 				onSubmit={(values) => {
 					navigation('/list');
+					console.log(values);
 				}}
 			>
 				{({
 					handleBlur,
 					handleChange,
 					handleSubmit,
-					values
+					values,
+					submitForm,
 				}) => (
 					<form onSubmit={handleSubmit}>
 						<Box>
-
 							<BoxHeader headingText={'Task Manager'} />
 
-							<div className='inputs-container'>
+							<div className="inputs-container">
 								<Input
 									type={'text'}
 									name={'username'}
@@ -38,7 +39,8 @@ const Login = () => {
 									icon={<Close />}
 									onChange={handleChange}
 									onBlur={handleBlur}
-									value={values.username} />
+									value={values.username}
+								/>
 								<Input
 									className={'password-input'}
 									type={'password'}
@@ -47,15 +49,14 @@ const Login = () => {
 									icon={<Password />}
 									onChange={handleChange}
 									onBlur={handleBlur}
-									value={values.password} />
+									value={values.password}
+								/>
 							</div>
-							<Button text={'login'} type={'sumit'} />
+							<Button text={'login'} type={'submit'} />
 						</Box>
-
 					</form>
 				)}
 			</Formik>
-
 		</PageContainer>
 	);
 };
