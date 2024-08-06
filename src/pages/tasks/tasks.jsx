@@ -32,7 +32,7 @@ export default function tasks() {
 				>
 					{tasks.length !== 0 && <Pagination />}
 
-					<Button text={`Task`} icon={<Plus />} />
+					<Button text={`Task`} icon={<Plus />} link="/create" />
 				</div>
 			</Box>
 		</PageContainer>

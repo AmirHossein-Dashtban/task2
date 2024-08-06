@@ -47,7 +47,7 @@ const CreateTask = () => {
 								/>
 							</div>
 
-							<Button text={'Create'} type={'sumit'} />
+							<Button text={'Create'} type={'submit'} />
 						</Box>
 					</form>
 				)}
