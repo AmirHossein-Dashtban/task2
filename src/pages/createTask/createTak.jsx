@@ -6,6 +6,7 @@ import Button from '../../components/button/button';
 import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { ArrowRightIcon } from '../../assets/icons/index';
 
 const CreateTask = () => {
 	const navigation = useNavigate();
@@ -21,7 +22,10 @@ const CreateTask = () => {
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
 					<form onSubmit={handleSubmit}>
 						<Box>
-							<BoxHeader headingText={'Task Manager'} />
+							<BoxHeader
+								headingText={'Task Manager'}
+								rightIcon={[<ArrowRightIcon />, '/list']}
+							/>
 
 							<div className="inputs-container">
 								<Input
