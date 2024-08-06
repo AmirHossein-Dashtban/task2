@@ -14,7 +14,7 @@ const router = createBrowserRouter([
 		// loader: rootLoader,
 	},
 	{
-		path: '/list',
+		path: '/list/:pageNumber',
 		element: <Tasks />,
 		// loader: rootLoader,
 	},

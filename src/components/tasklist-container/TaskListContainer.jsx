@@ -9,7 +9,7 @@ export default function TaskListContainer({ tasks }) {
 			{tasks.length ? (
 				<ul className="tasklist">
 					{tasks.map((task) => (
-						<TaskListItem>{task.taskName}</TaskListItem>
+						<TaskListItem key={task.id}>{task.title}</TaskListItem>
 					))}
 				</ul>
 			) : (
