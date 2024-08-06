@@ -3,9 +3,10 @@ import Box from '../../components/box-component/Box';
 import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
+import PageContainer from '../../components/page-container/page-container';
 
 const CreateTask = () => {
-    return <div style={{ display: 'flex', height: '100vh', width: '100vw' }}>
+    return <PageContainer>
         <Box>
             <BoxHeader headingText={'Task Manager'} />
 
@@ -17,7 +18,7 @@ const CreateTask = () => {
             <Button text={'Create'} type={'sumit'} />
         </Box>
 
-    </div>
+    </PageContainer>
 };
 
 export default CreateTask;

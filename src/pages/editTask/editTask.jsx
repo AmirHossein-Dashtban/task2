@@ -4,9 +4,10 @@ import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
 import { ArrowRightIcon, Trash } from '../../assets/icons';
+import PageContainer from '../../components/page-container/page-container';
 
 const EditTak = () => {
-    return <div style={{ display: 'flex', height: '100vh', width: '100vw' }}>
+    return <PageContainer>
         <Box>
             <BoxHeader headingText={'Edit Task #1'} rightIcon={<ArrowRightIcon />} leftIcon={<Trash />} />
 
@@ -18,7 +19,7 @@ const EditTak = () => {
             <Button text={'Save'} type={'sumit'} />
         </Box>
 
-    </div>
+    </PageContainer>
 };
 
 export default EditTak;
