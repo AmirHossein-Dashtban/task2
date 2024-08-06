@@ -1,0 +1,19 @@
+.tasklist-container {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.tasklist-icon {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	justify-content: end;
+	margin-bottom: 1rem;
+	width: 100%;
+}
+
+.tasklist {
+	list-style-type: none;
+}
