@@ -4,19 +4,20 @@ import Input from '../../components/input/input';
 import Button from '../../components/button/button';
 import './login.css';
 import { Close, Password } from '../../assets/icons';
+import PageContainer from '../../components/page-container/page-container';
 
 const Login = () => {
 	return (
-		<div style={{ display: 'flex', height: '100vh', width: '100vw' }}>
+		<PageContainer>
 			<Box>
 				<BoxHeader headingText={'Task Manager'} />
-            <div className='inputs-container'>
-                <Input type={'text'} name={'username'} title={'Username'} icon={<Close />} />
-                <Input type={'password'} name={'password'} title={'Password'} className={'password-input'} icon={<Password />} />
-            </div>
+				<div className='inputs-container'>
+					<Input type={'text'} name={'username'} title={'Username'} icon={<Close />} />
+					<Input type={'password'} name={'password'} title={'Password'} className={'password-input'} icon={<Password />} />
+				</div>
 				<Button text={'login'} type={'sumit'} />
 			</Box>
-		</div>
+		</PageContainer>
 	);
 };
 

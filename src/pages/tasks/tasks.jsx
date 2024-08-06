@@ -5,6 +5,7 @@ import TaskListContainer from '../../components/tasklist-container/TaskListConta
 import Pagination from '../../components/pagination/Pagination';
 import Button from '../../components/button/button';
 import { LogOutIcon, Plus } from '../../assets/icons/index';
+import PageContainer from '../../components/page-container/page-container';
 
 export default function tasks() {
 	const [tasks, setTasks] = useState([
@@ -14,10 +15,7 @@ export default function tasks() {
 	]);
 
 	return (
-		<section
-			className="page-container"
-			style={{ display: 'flex', height: '100vh', width: '100vw' }}
-		>
+		<PageContainer>
 			<Box>
 				<BoxHeader
 					leftIcon={<LogOutIcon />}
@@ -30,6 +28,6 @@ export default function tasks() {
 
 				<Button text={`Task`} icon={<Plus />} />
 			</Box>
-		</section>
+		</PageContainer>
 	);
 }
