@@ -23,6 +23,14 @@ ul {
 	padding-inline-start: 0;
 }
 
+a {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	text-decoration: none;
+	color: #cac4d0;
+}
+
 body {
 	background-color: var(--main-bg-color);
 	color: var(--main-text-color);
