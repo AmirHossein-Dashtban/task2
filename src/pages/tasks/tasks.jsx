@@ -8,17 +8,13 @@ import { LogOutIcon, Plus } from '../../assets/icons/index';
 import PageContainer from '../../components/page-container/page-container';
 
 export default function tasks() {
-	const [tasks, setTasks] = useState([
-		{ taskName: 'Task #1' },
-		{ taskName: 'Task #2' },
-		{ taskName: 'Task #3' },
-	]);
+	const [tasks, setTasks] = useState([]);
 
 	return (
 		<PageContainer>
 			<Box>
 				<BoxHeader
-					leftIcon={<LogOutIcon />}
+					leftIcon={[<LogOutIcon />, '/login']}
 					headingText={`Jenny's Task`}
 				></BoxHeader>
 

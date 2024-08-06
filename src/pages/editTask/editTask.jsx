@@ -7,19 +7,34 @@ import { ArrowRightIcon, Trash } from '../../assets/icons';
 import PageContainer from '../../components/page-container/page-container';
 
 const EditTak = () => {
-    return <PageContainer>
-        <Box>
-            <BoxHeader headingText={'Edit Task #1'} rightIcon={<ArrowRightIcon />} leftIcon={<Trash />} />
+	return (
+		<PageContainer>
+			<Box>
+				<BoxHeader
+					headingText={'Edit Task #1'}
+					rightIcon={[<ArrowRightIcon />, '/list']}
+					leftIcon={[
+						<Trash />,
+						() => {
+							console.log('!deleted');
+						},
+					]}
+				/>
 
-            <div className='inputs-container'>
-                <Input type={'text'} name={'name'} title={'name'} />
-                <Input type={'text'} name={'priority'} title={'priority'} className={'priority-input'} />
-            </div>
+				<div className="inputs-container">
+					<Input type={'text'} name={'name'} title={'name'} />
+					<Input
+						type={'text'}
+						name={'priority'}
+						title={'priority'}
+						className={'priority-input'}
+					/>
+				</div>
 
-            <Button text={'Save'} type={'sumit'} />
-        </Box>
-
-    </PageContainer>
+				<Button text={'Save'} type={'sumit'} />
+			</Box>
+		</PageContainer>
+	);
 };
 
 export default EditTak;
