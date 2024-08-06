@@ -19,7 +19,6 @@ const Login = () => {
 			<Formik
 				initialValues={{ username: '', password: '' }}
 				onSubmit={(values) => {
-					// console.log(states[0]);
 					const user = states[0].users.find((_user) => {
 						return (
 							_user.userName == values.username &&
@@ -32,7 +31,7 @@ const Login = () => {
 							'userInfo',
 							JSON.stringify({ ...user, password: 'HASHED!' })
 						);
-						navigation('/list');
+						navigation('/list/page1');
 					} else {
 					}
 				}}

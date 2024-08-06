@@ -26,14 +26,11 @@ export default function tasks() {
 		);
 		setUserInfo(info);
 		setTasks([...currentUserTasks]);
-		console.log(userInfo);
 	}, []);
-	console.log(userInfo);
 
 	return (
 		<PageContainer>
 			<Box>
-				{/* {console.log(userInfo.userName)} */}
 				<BoxHeader
 					leftIcon={[<LogOutIcon />, '/login']}
 					headingText={`${userInfo.userName}'s Tasks`}
