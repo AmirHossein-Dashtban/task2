@@ -7,6 +7,7 @@ import DocumentIcon from './DocumentIcon';
 import Close from './close';
 import Password from './password';
 import Trash from './trash';
+import FilterIcon from './FilterIcon';
 
 export {
 	LogOutIcon,
@@ -17,5 +18,6 @@ export {
 	DocumentIcon,
 	Close,
 	Password,
-	Trash
+	Trash,
+	FilterIcon,
 };
