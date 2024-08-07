@@ -15,7 +15,17 @@ export default function Pagination({
 	href,
 }) {
 	const pageNumber = useParams().pageNumber.slice(4);
-	const Map = new Array(paginationCount).fill(0);
+
+	let from = pageNumber < 4 ? 0 : pageNumber - 3;
+	let to = from + 5 < paginationCount ? from + 5 : paginationCount;
+
+	const Map = [];
+
+	for (let i = from; i < to; i++) {
+		Map.push(i);
+	}
+
+	console.log(Map);
 
 	useEffect(() => {
 		handleClick(1);
@@ -33,12 +43,12 @@ export default function Pagination({
 
 			<div className="pagination-list__container">
 				<ul className="pagination-list">
-					{Map.map((_, index) => (
+					{Map.map((elem) => (
 						<li
 							// onClick={handleClick}
-							key={index}
+							key={elem}
 							className={`pagination-item ${
-								index + 1 == pageNumber &&
+								elem + 1 == pageNumber &&
 								'pagination-item__selected'
 							}`}
 						>
@@ -47,9 +57,9 @@ export default function Pagination({
 									width: '100%',
 									height: '100%',
 								}}
-								to={`${href}${index + 1}`}
+								to={`${href}${elem + 1}`}
 							>
-								{index + 1}
+								{elem + 1}
 							</Link>
 						</li>
 					))}
