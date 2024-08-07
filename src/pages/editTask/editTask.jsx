@@ -15,7 +15,7 @@ const EditTak = () => {
 			<Formik
 				initialValues={{ name: '', priority: '' }}
 				onSubmit={(values, { setSubmitting }) => {
-					navigation('/list');
+					navigation('/list/page1');
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
