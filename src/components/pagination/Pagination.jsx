@@ -17,17 +17,19 @@ export default function Pagination({
 	const pageNumber = useParams().pageNumber.slice(4);
 	const Map = new Array(paginationCount).fill(0);
 
-	console.log(Map);
-
 	useEffect(() => {
 		handleClick(1);
 	}, [paginationNumber, paginationCount]);
 
 	return (
 		<section className="pagination-container">
-			<div className="paginaton-left-icon">
-				<PaginationArrowLeftIcon></PaginationArrowLeftIcon>
-			</div>
+			{pageNumber != 1 && (
+				<div className="paginaton-left-icon">
+					<Link to={`/list/page${paginationNumber - 1}`}>
+						<PaginationArrowLeftIcon></PaginationArrowLeftIcon>
+					</Link>
+				</div>
+			)}
 
 			<div className="pagination-list__container">
 				<ul className="pagination-list">
@@ -54,9 +56,13 @@ export default function Pagination({
 				</ul>
 			</div>
 
-			<div className="paginaton-right-icon">
-				<PaginationArrowRightIcon></PaginationArrowRightIcon>
-			</div>
+			{paginationCount != pageNumber && (
+				<div className="paginaton-right-icon">
+					<Link to={`/list/page${paginationNumber + 1}`}>
+						<PaginationArrowRightIcon></PaginationArrowRightIcon>
+					</Link>
+				</div>
+			)}
 		</section>
 	);
 }

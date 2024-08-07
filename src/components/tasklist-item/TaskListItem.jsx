@@ -2,8 +2,6 @@ import React from 'react';
 import './TaskListItem.css';
 
 export default function TaskList({ taskID, onToggle, children, checked }) {
-	console.log(checked);
-
 	return (
 		<>
 			<li className="tasklist-item">
