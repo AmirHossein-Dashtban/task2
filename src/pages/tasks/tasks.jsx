@@ -20,6 +20,18 @@ export default function tasks() {
 	const states = useContext(StateContext);
 	const userTasks = states[1].tasks;
 
+	function handleToggleTask(taskID, isCompleted) {
+		setTasks(
+			tasks.map((task) => {
+				if (task.id === taskID) {
+					return [...tasks, isCompleted];
+				} else {
+					return task;
+				}
+			})
+		);
+	}
+
 	useEffect(() => {
 		const info = { ...JSON.parse(localStorage.getItem('userInfo')) };
 		const currentUserTasks = userTasks.filter(
@@ -29,15 +41,14 @@ export default function tasks() {
 		setTasks([...currentUserTasks]);
 	}, []);
 
-  	const [
+	const [
 		paginatedItems,
 		setItemsPerPage,
 		paginationNumber,
 		paginationCount,
 		handleClick,
-	] = usePagination(tasks, 3)
+	] = usePagination(tasks, 3);
 
-  
 	return (
 		<PageContainer>
 			<Box>
@@ -46,7 +57,10 @@ export default function tasks() {
 					headingText={`${userInfo.userName}'s Tasks`}
 				></BoxHeader>
 
-				<TaskListContainer tasks={paginatedItems}></TaskListContainer>
+				<TaskListContainer
+					tasks={paginatedItems}
+					onToggle={handleToggleTask}
+				></TaskListContainer>
 
 				<div
 					style={{
