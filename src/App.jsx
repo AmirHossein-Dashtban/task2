@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Tasks, CreateTask, EditTask, Login } from './pages';
+import { StateContext, stateHandler } from './data/data';
 
 const router = createBrowserRouter([
 	{
@@ -31,5 +32,11 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-	return <RouterProvider router={router} />;
+	const states = stateHandler();
+
+	return (
+		<StateContext.Provider value={states}>
+			<RouterProvider router={router} />
+		</StateContext.Provider>
+	);
 }

@@ -7,40 +7,43 @@ import Button from '../../components/button/button';
 import { LogOutIcon, Plus } from '../../assets/icons/index';
 import PageContainer from '../../components/page-container/page-container';
 import usePagination from '../../hooks/usePagination';
+import { StateContext } from '../../data/data';
+import { useContext } from 'react';
 
 export default function tasks() {
-	const [tasks, setTasks] = useState([
-		{ id: 0, title: 'Task #1', isCompleted: false },
-		{ id: 1, title: 'Task #2', isCompleted: false },
-		{ id: 2, title: 'Task #3', isCompleted: false },
-		{ id: 3, title: 'Task #4', isCompleted: false },
-		{ id: 4, title: 'Task #5', isCompleted: false },
-	]);
+	const [userInfo, setUserInfo] = useState({
+		id: '',
+		userName: '',
+		password: '',
+	});
+	const [tasks, setTasks] = useState([]);
+	const states = useContext(StateContext);
+	const userTasks = states[1].tasks;
 
-	const [
+	useEffect(() => {
+		const info = { ...JSON.parse(localStorage.getItem('userInfo')) };
+		const currentUserTasks = userTasks.filter(
+			(task) => task.userID === info.id
+		);
+		setUserInfo(info);
+		setTasks([...currentUserTasks]);
+	}, []);
+
+  	const [
 		paginatedItems,
 		setItemsPerPage,
 		paginationNumber,
 		paginationCount,
 		handleClick,
-	] = usePagination(tasks, 3);
+	] = usePagination(tasks, 3)
 
-	useEffect(() => {
-		handleClick();
-	}, []);
-
-	// console.log(paginatedItems);
-	// console.log(setItemsPerPage);
-	// console.log(paginationNumber);
-	// console.log(paginationCount);
-	// console.log(handleClick);
-
+  
 	return (
 		<PageContainer>
 			<Box>
 				<BoxHeader
 					leftIcon={[<LogOutIcon />, '/login']}
-					headingText={`Jenny's Task`}
+					headingText={`${userInfo.userName}'s Tasks`}
 				></BoxHeader>
 
 				<TaskListContainer tasks={paginatedItems}></TaskListContainer>
@@ -65,7 +68,7 @@ export default function tasks() {
 						/>
 					)}
 
-					<Button text={`Task`} icon={<Plus />} />
+					<Button text={`Task`} icon={<Plus />} link="/create" />
 				</div>
 			</Box>
 		</PageContainer>
