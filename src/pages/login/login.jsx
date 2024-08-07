@@ -9,44 +9,52 @@ import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { StateContext } from '../../data/data';
 import { useContext } from 'react';
+import PocketBaseContext from '../../context/PocketBaseContext';
 
 const Login = () => {
 	const navigation = useNavigate();
 	const states = useContext(StateContext);
+	const pb = useContext(PocketBaseContext);
 
 	return (
 		<PageContainer>
 			<Formik
 				initialValues={{ username: '', password: '' }}
-				onSubmit={(values) => {
-					const userInfo = {
-						ID: 1,
-						userName: values.username,
-						passwrod: values.password,
-					};
-					// const user = states[0].users.find((_user) => {
-					// 	return (
-					// 		_user.userName == values.username &&
-					// 		_user.password == values.password
-					// 	);
-					// });
+				onSubmit={async (values) => {
+					// const data = {
+					// 	username: values.username,
+					// 	email: 'negin@example.com',
+					// 	emailVisibility: true,
+					// 	password: values.password,
+					// 	passwordConfirm: values.password,
+					// 	name: values.username, // Ensure this field is included as it's required
+					// };
 
-					fetch(
-						'https://task-managment-6ab15-default-rtdb.firebaseio.com/users.json',
-						{
-							method: 'POST',
-							body: JSON.stringify(userInfo),
-						}
-					).then((response) => console.log(response));
+					// try {
+					// 	const record = await pb
+					// 		.collection('users')
+					// 		.create(data);
+					// 	console.log('User created successfully:', record);
 
-					// if (user) {
-					// 	localStorage.setItem(
-					// 		'userInfo',
-					// 		JSON.stringify({ ...user, password: 'HASHED!' })
-					// 	);
-					// 	navigation('/list/page1');
-					// } else {
+					// 	// (optional) send an email verification request
+					// 	await pb
+					// 		.collection('users')
+					// 		.requestVerification('test@example.com');
+					// } catch (error) {
+					// 	console.error('Error creating user:', error); // This will show the detailed error message
 					// }
+
+					const authData = await pb
+						.collection('users')
+						.authWithPassword(values.username, values.password);
+
+					// after the above you can also access the auth data from the authStore
+					console.log(pb.authStore.isValid);
+					console.log(pb.authStore.token);
+					console.log(pb.authStore.model.id);
+
+					// "logout" the last authenticated account
+					pb.authStore.clear();
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
