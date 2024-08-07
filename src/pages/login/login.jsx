@@ -7,26 +7,36 @@ import { Close, Password } from '../../assets/icons';
 import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { StateContext } from '../../data/data';
+import { useContext } from 'react';
 
 const Login = () => {
 	const navigation = useNavigate();
+	const states = useContext(StateContext);
 
 	return (
 		<PageContainer>
 			<Formik
 				initialValues={{ username: '', password: '' }}
 				onSubmit={(values) => {
-					navigation('/list');
-					console.log(values);
+					const user = states[0].users.find((_user) => {
+						return (
+							_user.userName == values.username &&
+							_user.password == values.password
+						);
+					});
+
+					if (user) {
+						localStorage.setItem(
+							'userInfo',
+							JSON.stringify({ ...user, password: 'HASHED!' })
+						);
+						navigation('/list/page1');
+					} else {
+					}
 				}}
 			>
-				{({
-					handleBlur,
-					handleChange,
-					handleSubmit,
-					values,
-					submitForm,
-				}) => (
+				{({ handleBlur, handleChange, handleSubmit, values }) => (
 					<form onSubmit={handleSubmit}>
 						<Box>
 							<BoxHeader headingText={'Task Manager'} />
