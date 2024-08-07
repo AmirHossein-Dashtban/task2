@@ -16,7 +16,7 @@ const CreateTask = () => {
 			<Formik
 				initialValues={{ name: '', priority: '' }}
 				onSubmit={(values, { setSubmitting }) => {
-					navigation('/list');
+					navigation('/list/page1');
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
@@ -24,7 +24,7 @@ const CreateTask = () => {
 						<Box>
 							<BoxHeader
 								headingText={'Task Manager'}
-								rightIcon={[<ArrowRightIcon />, '/list']}
+								rightIcon={[<ArrowRightIcon />, '/list/page1']}
 							/>
 
 							<div className="inputs-container">
