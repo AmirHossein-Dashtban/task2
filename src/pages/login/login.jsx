@@ -19,21 +19,34 @@ const Login = () => {
 			<Formik
 				initialValues={{ username: '', password: '' }}
 				onSubmit={(values) => {
-					const user = states[0].users.find((_user) => {
-						return (
-							_user.userName == values.username &&
-							_user.password == values.password
-						);
-					});
+					const userInfo = {
+						ID: 1,
+						userName: values.username,
+						passwrod: values.password,
+					};
+					// const user = states[0].users.find((_user) => {
+					// 	return (
+					// 		_user.userName == values.username &&
+					// 		_user.password == values.password
+					// 	);
+					// });
 
-					if (user) {
-						localStorage.setItem(
-							'userInfo',
-							JSON.stringify({ ...user, password: 'HASHED!' })
-						);
-						navigation('/list/page1');
-					} else {
-					}
+					fetch(
+						'https://task-managment-6ab15-default-rtdb.firebaseio.com/users.json',
+						{
+							method: 'POST',
+							body: JSON.stringify(userInfo),
+						}
+					).then((response) => console.log(response));
+
+					// if (user) {
+					// 	localStorage.setItem(
+					// 		'userInfo',
+					// 		JSON.stringify({ ...user, password: 'HASHED!' })
+					// 	);
+					// 	navigation('/list/page1');
+					// } else {
+					// }
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
