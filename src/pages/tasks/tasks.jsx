@@ -6,6 +6,7 @@ import Pagination from '../../components/pagination/Pagination';
 import Button from '../../components/button/button';
 import { LogOutIcon, Plus } from '../../assets/icons/index';
 import PageContainer from '../../components/page-container/page-container';
+import usePagination from '../../hooks/usePagination';
 import { StateContext } from '../../data/data';
 import { useContext } from 'react';
 
@@ -28,6 +29,15 @@ export default function tasks() {
 		setTasks([...currentUserTasks]);
 	}, []);
 
+  	const [
+		paginatedItems,
+		setItemsPerPage,
+		paginationNumber,
+		paginationCount,
+		handleClick,
+	] = usePagination(tasks, 3)
+
+  
 	return (
 		<PageContainer>
 			<Box>
@@ -36,7 +46,7 @@ export default function tasks() {
 					headingText={`${userInfo.userName}'s Tasks`}
 				></BoxHeader>
 
-				<TaskListContainer tasks={tasks}></TaskListContainer>
+				<TaskListContainer tasks={paginatedItems}></TaskListContainer>
 
 				<div
 					style={{
@@ -48,7 +58,15 @@ export default function tasks() {
 						width: '100%',
 					}}
 				>
-					{tasks.length !== 0 && <Pagination />}
+					{tasks.length !== 0 && (
+						<Pagination
+							paginationNumber={paginationNumber}
+							itemsperPage={3}
+							paginationCount={paginationCount}
+							handleClick={handleClick}
+							href={`/list/page`}
+						/>
+					)}
 
 					<Button text={`Task`} icon={<Plus />} link="/create" />
 				</div>
