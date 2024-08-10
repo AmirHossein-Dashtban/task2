@@ -1,39 +1,41 @@
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PageContainer from '../../components/page-container/page-container';
 import Box from '../../components/box-component/Box';
 import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
-import './login.css';
 import { Close, Password } from '../../assets/icons';
-import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { StateContext } from '../../data/data';
-import { useContext } from 'react';
+import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
+import './login.css';
 
 const Login = () => {
 	const navigation = useNavigate();
-	const states = useContext(StateContext);
+	const pb = useContext(PocketBaseContext);
 
 	return (
 		<PageContainer>
 			<Formik
 				initialValues={{ username: '', password: '' }}
-				onSubmit={(values) => {
-					const user = states[0].users.find((_user) => {
-						return (
-							_user.userName == values.username &&
-							_user.password == values.password
-						);
-					});
+				onSubmit={async (values) => {
+					try {
+						const authData = await pb
+							.collection('users')
+							.authWithPassword(values.username, values.password);
 
-					if (user) {
-						localStorage.setItem(
-							'userInfo',
-							JSON.stringify({ ...user, password: 'HASHED!' })
-						);
+						document.cookie = `userToken=${pb.authStore.token}; expires=; path=/`;
+						document.cookie = `userID=${pb.authStore.model.id}; expires=; path=/`;
+						document.cookie = `userName=${values.username}; expires=; path=/`;
+						document.cookie = `userPassword=${values.password}; expires=; path=/`;
+
+						// isLogin = true
+
 						navigation('/list/page1');
-					} else {
+					} catch (error) {
+						console.log(error);
 					}
+					pb.authStore.clear();
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (

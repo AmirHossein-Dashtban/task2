@@ -3,6 +3,12 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Tasks, CreateTask, EditTask, Login } from './pages';
 import { StateContext, stateHandler } from './data/data';
+// import {
+// 	AuthContext,
+// 	isLogin,
+// 	setIsLogin,
+// 	handleLogout,
+// } from './context/auth/AuthContext';
 
 const router = createBrowserRouter([
 	{
