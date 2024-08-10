@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Box from '../../components/box-component/Box';
 import BoxHeader from '../../components/box-header/BoxHeader';
 import TaskListContainer from '../../components/tasklist-container/TaskListContainer';
@@ -6,48 +6,42 @@ import Pagination from '../../components/pagination/Pagination';
 import Button from '../../components/button/button';
 import { LogOutIcon, Plus } from '../../assets/icons/index';
 import PageContainer from '../../components/page-container/page-container';
-import usePagination from '../../hooks/usePagination';
-import { StateContext } from '../../data/data';
-import { useContext } from 'react';
+import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
+import { useParams } from 'react-router-dom';
+import Filter from '../../components/filter/filter';
 
 export default function tasks() {
+	const pb = useContext(PocketBaseContext);
+	const paginationNumber = Number(useParams().pageNumber.slice(4));
 	const [userInfo, setUserInfo] = useState({
 		id: '',
 		userName: '',
 		password: '',
 	});
 	const [tasks, setTasks] = useState([]);
-	const states = useContext(StateContext);
-	const userTasks = states[1].tasks;
+	const [totalPage, setTotalPage] = useState(0);
+	const [filter, setFilter] = useState(null);
 
-	function handleToggleTask(taskID, isCompleted) {
-		setTasks(
-			tasks.map((task) => {
-				if (task.id === taskID) {
-					return [...tasks, isCompleted];
-				} else {
-					return task;
-				}
-			})
-		);
-	}
+	async function handleToggleTask(taskID, isCompleted) {
+		try {
+			await pb.collection('tasks').update(taskID, { 'isCompleted': isCompleted })
+		} finally {
+			GetTasks();
+		}
+	};
+
+	async function GetTasks() {
+		const resultList = await pb.collection('tasks').getList(paginationNumber, 3, {
+			filter: filter === null ? '' : `isCompleted = ${filter}`,
+		});
+		setTasks(resultList.items);
+		setTotalPage(resultList.totalPages);
+	};
 
 	useEffect(() => {
-		const info = { ...JSON.parse(localStorage.getItem('userInfo')) };
-		const currentUserTasks = userTasks.filter(
-			(task) => task.userID === info.id
-		);
-		setUserInfo(info);
-		setTasks([...currentUserTasks]);
-	}, []);
+		GetTasks();
+	}, [paginationNumber, filter]);
 
-	const [
-		paginatedItems,
-		setItemsPerPage,
-		paginationNumber,
-		paginationCount,
-		handleClick,
-	] = usePagination(tasks, 3);
 
 	return (
 		<PageContainer>
@@ -56,9 +50,10 @@ export default function tasks() {
 					leftIcon={[<LogOutIcon />, '/login']}
 					headingText={`${userInfo.userName}'s Tasks`}
 				></BoxHeader>
+				<Filter setFilter={setFilter} />
 
 				<TaskListContainer
-					tasks={paginatedItems}
+					tasks={tasks}
 					onToggle={handleToggleTask}
 				></TaskListContainer>
 
@@ -76,8 +71,8 @@ export default function tasks() {
 						<Pagination
 							paginationNumber={paginationNumber}
 							itemsperPage={3}
-							paginationCount={paginationCount}
-							handleClick={handleClick}
+							paginationCount={totalPage}
+							handleClick={() => { }}
 							href={`/list/page`}
 						/>
 					)}

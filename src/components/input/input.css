@@ -26,7 +26,7 @@
 }
 
 .input-card input {
-    background-color: transparent;
+    background-color: var(--input-bg-color) !important;
     border: none;
     outline: none;
     color: var(--place-holder-color);
@@ -35,6 +35,15 @@
     height: 16px;
     margin-top: 4px;
 }
+
+.input-card input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--place-holder-color) !important;
+}
+
 
 .input-card input::placeholder {
     font-size: 16px;

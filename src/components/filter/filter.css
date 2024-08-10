@@ -1,0 +1,36 @@
+.filter-button {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 1rem;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.filter-container {
+    width: 100%;
+    position: relative;
+
+}
+
+.filter-list {
+    position: absolute;
+    top: 100%;
+    height: fit-content;
+    right: 20px;
+    background-color: var(--main-bg-color);
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 2;
+}
+
+.filter-list ul {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.filter-list ul:hover {
+    background-color: var(--box-bg-color);
+}
