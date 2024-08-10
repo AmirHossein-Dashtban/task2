@@ -47,7 +47,7 @@ export default function tasks() {
 		paginationNumber,
 		paginationCount,
 		handleClick,
-	] = usePagination(tasks, 1);
+	] = usePagination(tasks, 3);
 
 	return (
 		<PageContainer>
