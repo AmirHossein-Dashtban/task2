@@ -3,7 +3,12 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Tasks, CreateTask, EditTask, Login } from './pages';
 import { StateContext, stateHandler } from './data/data';
-import PocketBaseProvider from './context/PocketBaseProvider';
+// import {
+// 	AuthContext,
+// 	isLogin,
+// 	setIsLogin,
+// 	handleLogout,
+// } from './context/auth/AuthContext';
 
 const router = createBrowserRouter([
 	{
@@ -36,10 +41,8 @@ export default function App() {
 	const states = stateHandler();
 
 	return (
-		<PocketBaseProvider>
-			<StateContext.Provider value={states}>
-				<RouterProvider router={router} />
-			</StateContext.Provider>
-		</PocketBaseProvider>
+		<StateContext.Provider value={states}>
+			<RouterProvider router={router} />
+		</StateContext.Provider>
 	);
 }
