@@ -1,6 +1,6 @@
 import './input.css'
 
-export default function Input({ title, name, type, placeHolder, icon, className, onChange, onBlur, value }) {
+export default function Input({ title, name, type, placeHolder, icon, className, onChange, onBlur, value, handleClickIcon }) {
     return <div className={'input-card ' + (className ? className : "")}>
         <div className='main-section'>
             <label>{title}</label>
@@ -8,7 +8,7 @@ export default function Input({ title, name, type, placeHolder, icon, className,
         </div>
         {
             icon &&
-            <div className='input-icon'>{icon}</div>
+            <div className='input-icon' onClick={() => { handleClickIcon() }}>{icon}</div>
         }
     </div>
 };

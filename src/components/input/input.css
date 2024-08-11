@@ -55,4 +55,5 @@ input:-webkit-autofill:active {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
