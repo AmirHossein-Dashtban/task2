@@ -9,26 +9,28 @@ import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRightIcon } from '../../assets/icons/index';
 import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
+import getCookie from '../../lib/getCookie';
 
 const CreateTask = () => {
 	const navigation = useNavigate();
 	const pb = useContext(PocketBaseContext);
+	const userInfo = getCookie(document.cookie);
 
 	async function AddTask(values) {
 		await pb.collection('tasks').create({
-			"title": values.name,
-			"priority": values.priority,
-			"isCompleted": false,
-			"userId": "test"
+			title: values.name,
+			priority: values.priority,
+			isCompleted: false,
+			userID: userInfo[2],
 		});
-	};
+	}
 
 	return (
 		<PageContainer>
 			<Formik
 				initialValues={{ name: '', priority: '' }}
 				onSubmit={(values, { setSubmitting }) => {
-					AddTask(values)
+					AddTask(values);
 					navigation('/list/page1');
 				}}
 			>

@@ -18,10 +18,4 @@ export default function getCookie(cookie) {
 	});
 
 	return [userName, userPassword, userID, userToken];
-
-	// // Log the results
-	// console.log('userID:', userID);
-	// console.log('userName:', userName);
-	// console.log('userPassword:', userPassword);
-	// console.log('userToken:', userToken);
 }

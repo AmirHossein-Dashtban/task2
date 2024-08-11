@@ -6,23 +6,26 @@ import Pagination from '../../components/pagination/Pagination';
 import Button from '../../components/button/button';
 import { LogOutIcon, Plus } from '../../assets/icons/index';
 import PageContainer from '../../components/page-container/page-container';
-import { AuthContext } from '../../context/auth/AuthContext';
 import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import { useParams } from 'react-router-dom';
 import Filter from '../../components/filter/filter';
+import getCookie from '../../lib/getCookie';
 
 export default function tasks() {
-	const authContext = useContext(AuthContext);
 	const pb = useContext(PocketBaseContext);
 	const paginationNumber = Number(useParams().pageNumber.slice(4));
-	const [userInfo, setUserInfo] = useState({
-		id: '',
-		userName: '',
-		password: '',
-	});
+	const userInfo = getCookie(document.cookie);
+
 	const [tasks, setTasks] = useState([]);
 	const [totalPage, setTotalPage] = useState(0);
-	const [filter, setFilter] = useState(null);
+	const [filter, setFilter] = useState('');
+
+	const handleLogout = () => {
+		document.cookie = `userToken=; expires=; path=/`;
+		document.cookie = `userID=; expires=; path=/`;
+		document.cookie = `userName=; expires=; path=/`;
+		document.cookie = `userPassword=; expires=; path=/`;
+	};
 
 	async function handleToggleTask(taskID, isCompleted) {
 		try {
@@ -35,11 +38,19 @@ export default function tasks() {
 	}
 
 	async function GetTasks() {
+		let filterString = `userID = "${userInfo[2]}"`;
+
+		if (filter === true) {
+			filterString += ` && isCompleted = true`;
+		} else if (filter === false) {
+			filterString += ` && isCompleted = false`;
+		}
+
 		try {
 			const resultList = await pb
 				.collection('tasks')
 				.getList(paginationNumber, 3, {
-					filter: filter === null ? '' : `isCompleted = ${filter}`,
+					filter: filterString,
 				});
 			setTasks(resultList.items);
 			setTotalPage(resultList.totalPages);
@@ -55,10 +66,10 @@ export default function tasks() {
 			<Box>
 				<BoxHeader
 					leftIcon={[
-						<LogOutIcon handleLogout={authContext.handleLogout} />,
+						<LogOutIcon handleLogout={handleLogout} />,
 						'/login',
 					]}
-					headingText={`${authContext.userName}'s Tasks`}
+					headingText={`${userInfo[0]}'s Tasks`}
 				></BoxHeader>
 				<Filter setFilter={setFilter} />
 
@@ -90,7 +101,6 @@ export default function tasks() {
 					<Button text={`Task`} icon={<Plus />} link="/create" />
 				</div>
 			</Box>
-			)
 		</PageContainer>
 	);
 }
