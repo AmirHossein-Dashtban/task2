@@ -9,12 +9,10 @@ import { Close, Password } from '../../assets/icons';
 import { Formik } from 'formik';
 import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import './login.css';
-import { AuthContext } from '../../context/auth/AuthContext';
 
 const Login = () => {
 	const navigation = useNavigate();
 	const pb = useContext(PocketBaseContext);
-	const authContext = useContext(AuthContext);
 
 	return (
 		<PageContainer>
@@ -31,7 +29,6 @@ const Login = () => {
 						document.cookie = `userName=${values.username}; expires=; path=/`;
 						document.cookie = `userPassword=${values.password}; expires=; path=/`;
 
-						authContext.setIsLogin(true);
 						navigation('/list/page1');
 					} catch (error) {
 						console.log(error);
