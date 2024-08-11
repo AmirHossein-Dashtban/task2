@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import PocketBaseContext from './context/pocketbase/PocketBaseProvider.jsx';
 import PocketBaseProvider from './context/pocketbase/PocketBaseProvider';
 import App from './App.jsx';
 import './index.css';

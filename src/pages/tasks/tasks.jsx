@@ -6,11 +6,14 @@ import Pagination from '../../components/pagination/Pagination';
 import Button from '../../components/button/button';
 import { LogOutIcon, Plus } from '../../assets/icons/index';
 import PageContainer from '../../components/page-container/page-container';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/auth/AuthContext';
 import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import { useParams } from 'react-router-dom';
 import Filter from '../../components/filter/filter';
 
 export default function tasks() {
+  const authContext = useContext(AuthContext);
 	const pb = useContext(PocketBaseContext);
 	const paginationNumber = Number(useParams().pageNumber.slice(4));
 	const [userInfo, setUserInfo] = useState({
@@ -47,8 +50,8 @@ export default function tasks() {
 		<PageContainer>
 			<Box>
 				<BoxHeader
-					leftIcon={[<LogOutIcon />, '/login']}
-					headingText={`${userInfo.userName}'s Tasks`}
+					leftIcon={[<LogOutIcon={authContext.handleLogout} />, '/login']}
+					headingText={`${authContext.userName}'s Tasks`}
 				></BoxHeader>
 				<Filter setFilter={setFilter} />
 
@@ -77,9 +80,10 @@ export default function tasks() {
 						/>
 					)}
 
-					<Button text={`Task`} icon={<Plus />} link="/create" />
-				</div>
-			</Box>
+						<Button text={`Task`} icon={<Plus />} link="/create" />
+					</div>
+				</Box>
+			) 
 		</PageContainer>
 	);
 }

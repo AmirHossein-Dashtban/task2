@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import PageContainer from '../../components/page-container/page-container';
 import Box from '../../components/box-component/Box';
 import BoxHeader from '../../components/box-header/BoxHeader';
@@ -29,12 +29,11 @@ const Login = () => {
 						document.cookie = `userName=${values.username}; expires=; path=/`;
 						document.cookie = `userPassword=${values.password}; expires=; path=/`;
 
-						// isLogin = true
-
 						navigation('/list/page1');
 					} catch (error) {
 						console.log(error);
 					}
+
 					pb.authStore.clear();
 				}}
 			>
