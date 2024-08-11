@@ -48,7 +48,6 @@ export default function tasks() {
 
 	return (
 		<PageContainer>
-  {authContext.userName !== '' ? (
 			<Box>
 				<BoxHeader
 					leftIcon={[<LogOutIcon={authContext.handleLogout} />, '/login']}
@@ -84,14 +83,7 @@ export default function tasks() {
 						<Button text={`Task`} icon={<Plus />} link="/create" />
 					</div>
 				</Box>
-			) : (
-				<Box>
-					<BoxHeader
-						leftIcon={[<LogOutIcon />, '/login']}
-						headingText={`Create an account and then make tasks! :)`}
-					></BoxHeader>
-				</Box>
-			)}
+			) 
 		</PageContainer>
 	);
 }
