@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageContainer from '../../components/page-container/page-container';
 import Box from '../../components/box-component/Box';
@@ -13,6 +13,7 @@ import './login.css';
 const Login = () => {
 	const navigation = useNavigate();
 	const pb = useContext(PocketBaseContext);
+	const [passwordInputType, setPasswordInputType] = useState('password');
 
 	return (
 		<PageContainer>
@@ -37,7 +38,7 @@ const Login = () => {
 					pb.authStore.clear();
 				}}
 			>
-				{({ handleBlur, handleChange, handleSubmit, values }) => (
+				{({ handleBlur, handleChange, handleSubmit, values, setFieldValue }) => (
 					<form onSubmit={handleSubmit}>
 						<Box>
 							<BoxHeader headingText={'Task Manager'} />
@@ -48,16 +49,18 @@ const Login = () => {
 									name={'username'}
 									title={'Username'}
 									icon={<Close />}
+									handleClickIcon={() => { setFieldValue('username', '') }}
 									onChange={handleChange}
 									onBlur={handleBlur}
 									value={values.username}
 								/>
 								<Input
 									className={'password-input'}
-									type={'password'}
+									type={passwordInputType}
 									name={'password'}
 									title={'Password'}
 									icon={<Password />}
+									handleClickIcon={() => { setPasswordInputType(passwordInputType === 'password' ? 'text' : 'password') }}
 									onChange={handleChange}
 									onBlur={handleBlur}
 									value={values.password}
