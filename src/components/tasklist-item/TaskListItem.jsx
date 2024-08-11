@@ -1,5 +1,6 @@
 import React from 'react';
 import './TaskListItem.css';
+import { Link } from 'react-router-dom';
 
 export default function TaskList({ taskID, onToggle, children, checked }) {
 	return (
@@ -7,7 +8,7 @@ export default function TaskList({ taskID, onToggle, children, checked }) {
 			<li className="tasklist-item">
 				<div className="tasklist-item__right">
 					<span className="tasklist-item__circle">A</span>
-					{children}
+					<Link to={`/edit/${taskID}`}>{children}</Link>
 				</div>
 
 				<div className="tasklist-item__left">

@@ -6,52 +6,65 @@ import Button from '../../components/button/button';
 import { ArrowRightIcon, Trash, LogOutIcon } from '../../assets/icons';
 import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import { useContext } from 'react';
 
 const EditTak = () => {
+	const pb = useContext(PocketBaseContext);
 	const navigation = useNavigate();
+	const taskID = useParams().taskID;
+
 	return (
 		<PageContainer>
-				<Formik
-					initialValues={{ name: '', priority: '' }}
-					onSubmit={(values, { setSubmitting }) => {
-						navigation('/list/page1');
-					}}
-				>
-					{({ handleBlur, handleChange, handleSubmit, values }) => (
-						<form onSubmit={handleSubmit}>
-							<Box>
-								<BoxHeader
-									headingText={'Edit Task #1'}
-									rightIcon={<ArrowRightIcon />}
-									leftIcon={<Trash />}
-								/>
-								<div className="inputs-container">
-									<Input
-										type={'text'}
-										name={'name'}
-										title={'name'}
-										onChange={handleChange}
-										onBlur={handleBlur}
-										value={values.name}
-									/>
-									<Input
-										type={'text'}
-										name={'priority'}
-										title={'priority'}
-										onChange={handleChange}
-										onBlur={handleBlur}
-										value={values.priority}
-										className={'priority-input'}
-									/>
-								</div>
+			<Formik
+				initialValues={{ name: '', priority: '' }}
+				onSubmit={async (values, { setSubmitting }) => {
+					console.log(values);
 
-								<Button text={'Save'} type={'sumit'} />
-							</Box>
-						</form>
-					)}
-				</Formik>
+					const data = {
+						title: values.name,
+						priority: values.priority,
+					};
+					const record = await pb
+						.collection('tasks')
+						.update(taskID, data);
+					navigation('/list/page1');
+				}}
+			>
+				{({ handleBlur, handleChange, handleSubmit, values }) => (
+					<form onSubmit={handleSubmit}>
+						<Box>
+							<BoxHeader
+								headingText={`Edit Task #${taskID}`}
+								rightIcon={<ArrowRightIcon />}
+								leftIcon={<Trash />}
+							/>
+							<div className="inputs-container">
+								<Input
+									type={'text'}
+									name={'name'}
+									title={'name'}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									value={values.name}
+								/>
+								<Input
+									type={'text'}
+									name={'priority'}
+									title={'priority'}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									value={values.priority}
+									className={'priority-input'}
+								/>
+							</div>
+
+							<Button text={'Save'} type={'submit'} />
+						</Box>
+					</form>
+				)}
+			</Formik>
 		</PageContainer>
 	);
 };

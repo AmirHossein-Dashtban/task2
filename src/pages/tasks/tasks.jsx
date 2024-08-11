@@ -26,30 +26,38 @@ export default function tasks() {
 
 	async function handleToggleTask(taskID, isCompleted) {
 		try {
-			await pb.collection('tasks').update(taskID, { 'isCompleted': isCompleted })
+			await pb
+				.collection('tasks')
+				.update(taskID, { isCompleted: isCompleted });
 		} finally {
 			GetTasks();
 		}
-	};
+	}
 
 	async function GetTasks() {
-		const resultList = await pb.collection('tasks').getList(paginationNumber, 3, {
-			filter: filter === null ? '' : `isCompleted = ${filter}`,
-		});
-		setTasks(resultList.items);
-		setTotalPage(resultList.totalPages);
-	};
+		try {
+			const resultList = await pb
+				.collection('tasks')
+				.getList(paginationNumber, 3, {
+					filter: filter === null ? '' : `isCompleted = ${filter}`,
+				});
+			setTasks(resultList.items);
+			setTotalPage(resultList.totalPages);
+		} catch (error) {}
+	}
 
 	useEffect(() => {
 		GetTasks();
 	}, [paginationNumber, filter]);
 
-
 	return (
 		<PageContainer>
 			<Box>
 				<BoxHeader
-					leftIcon={[<LogOutIcon handleLogout={authContext.handleLogout} />, '/login']}
+					leftIcon={[
+						<LogOutIcon handleLogout={authContext.handleLogout} />,
+						'/login',
+					]}
 					headingText={`${authContext.userName}'s Tasks`}
 				></BoxHeader>
 				<Filter setFilter={setFilter} />
@@ -74,7 +82,7 @@ export default function tasks() {
 							paginationNumber={paginationNumber}
 							itemsperPage={3}
 							paginationCount={totalPage}
-							handleClick={() => { }}
+							handleClick={() => {}}
 							href={`/list/page`}
 						/>
 					)}
@@ -83,6 +91,6 @@ export default function tasks() {
 				</div>
 			</Box>
 			)
-		</PageContainer >
+		</PageContainer>
 	);
 }
