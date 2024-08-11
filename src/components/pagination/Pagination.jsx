@@ -25,8 +25,6 @@ export default function Pagination({
 		Map.push(i);
 	}
 
-	// console.log(Map);
-
 	useEffect(() => {
 		handleClick(1);
 	}, [paginationNumber, paginationCount]);

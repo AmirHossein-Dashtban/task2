@@ -1,4 +1,5 @@
 import './createTask.css';
+import { useContext } from 'react';
 import Box from '../../components/box-component/Box';
 import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
@@ -7,15 +8,27 @@ import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRightIcon } from '../../assets/icons/index';
+import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 
 const CreateTask = () => {
 	const navigation = useNavigate();
+	const pb = useContext(PocketBaseContext);
+
+	async function AddTask(values) {
+		await pb.collection('tasks').create({
+			"title": values.name,
+			"priority": values.priority,
+			"isCompleted": false,
+			"userId": "test"
+		});
+	};
 
 	return (
 		<PageContainer>
 			<Formik
 				initialValues={{ name: '', priority: '' }}
 				onSubmit={(values, { setSubmitting }) => {
+					AddTask(values)
 					navigation('/list/page1');
 				}}
 			>
