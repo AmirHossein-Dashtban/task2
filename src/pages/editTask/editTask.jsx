@@ -8,14 +8,11 @@ import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { AuthContext } from '../../context/auth/AuthContext';
 
 const EditTak = () => {
-	const authContext = useContext(AuthContext);
 	const navigation = useNavigate();
 	return (
 		<PageContainer>
-			{authContext.isLogin ? (
 				<Formik
 					initialValues={{ name: '', priority: '' }}
 					onSubmit={(values, { setSubmitting }) => {
@@ -55,14 +52,6 @@ const EditTak = () => {
 						</form>
 					)}
 				</Formik>
-			) : (
-				<Box>
-					<BoxHeader
-						leftIcon={[<LogOutIcon />, '/login']}
-						headingText={'Login into your account first!'}
-					/>
-				</Box>
-			)}
 		</PageContainer>
 	);
 };
