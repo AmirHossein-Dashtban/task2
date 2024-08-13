@@ -3,7 +3,7 @@ import Box from '../../components/box-component/Box';
 import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
-import { ArrowRightIcon, Trash, LogOutIcon } from '../../assets/icons';
+import { ArrowRightIcon, Trash } from '../../assets/icons';
 import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,6 +14,11 @@ const EditTak = () => {
 	const pb = useContext(PocketBaseContext);
 	const navigation = useNavigate();
 	const taskID = useParams().taskID;
+
+	const handleDelete = async () => {
+		await pb.collection('tasks').delete(taskID);
+		navigation('/list/page1');
+	};
 
 	return (
 		<PageContainer>
@@ -36,9 +41,11 @@ const EditTak = () => {
 					<form onSubmit={handleSubmit}>
 						<Box>
 							<BoxHeader
-								headingText={`Edit Task #${taskID}`}
-								rightIcon={<ArrowRightIcon />}
-								leftIcon={<Trash />}
+								headingText={`Edit Task #${taskID.slice(0, 2)}`}
+								rightIcon={[<ArrowRightIcon />, '/list/page1']}
+								leftIcon={[
+									<Trash handleDelete={handleDelete} />,
+								]}
 							/>
 							<div className="inputs-container">
 								<Input
