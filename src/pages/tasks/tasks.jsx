@@ -10,13 +10,16 @@ import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import { useParams } from 'react-router-dom';
 import Filter from '../../components/filter/filter';
 import getCookie from '../../lib/getCookie';
+import { useSelector, useDispatch } from 'react-redux';
+import { add } from './taskSlice';
 
 export default function tasks() {
+	const tasks = useSelector((state) => state.task.value);
+	const dispatch = useDispatch();
 	const pb = useContext(PocketBaseContext);
 	const paginationNumber = Number(useParams().pageNumber.slice(4));
 	const userInfo = getCookie(document.cookie);
 
-	const [tasks, setTasks] = useState([]);
 	const [totalPage, setTotalPage] = useState(0);
 	const [filter, setFilter] = useState('');
 
@@ -52,7 +55,8 @@ export default function tasks() {
 				.getList(paginationNumber, 3, {
 					filter: filterString,
 				});
-			setTasks(resultList.items);
+			dispatch(add(resultList.items));
+
 			setTotalPage(resultList.totalPages);
 		} catch (error) {}
 	}
@@ -74,7 +78,6 @@ export default function tasks() {
 				<Filter setFilter={setFilter} />
 
 				<TaskListContainer
-					tasks={tasks}
 					onToggle={handleToggleTask}
 				></TaskListContainer>
 
