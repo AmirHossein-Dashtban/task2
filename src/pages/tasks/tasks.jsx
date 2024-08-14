@@ -11,8 +11,7 @@ import { useParams } from 'react-router-dom';
 import Filter from '../../components/filter/filter';
 import getCookie from '../../lib/getCookie';
 import { useSelector, useDispatch } from 'react-redux';
-import { add } from './taskSlice';
-import { setPage } from './pageSlice';
+import { fetchTasks } from './taskSlice';
 
 export default function tasks() {
 	const tasks = useSelector((state) => state.task.value);
@@ -29,29 +28,8 @@ export default function tasks() {
 		document.cookie = `userPassword=; expires=; path=/`;
 	};
 
-	async function GetTasks() {
-		let filterString = `userID = "${userInfo[2]}"`;
-
-		if (filter === 'completed') {
-			filterString += ` && isCompleted = true`;
-		} else if (filter === 'unCompleted') {
-			filterString += ` && isCompleted = false`;
-		}
-
-		try {
-			const resultList = await pb
-				.collection('tasks')
-				.getList(paginationNumber, 3, {
-					filter: filterString,
-				});
-			dispatch(add(resultList.items));
-
-			dispatch(setPage(resultList.totalPages));
-		} catch (error) {}
-	}
-
 	useEffect(() => {
-		GetTasks();
+		dispatch(fetchTasks({ userID: userInfo[2], paginationNumber, filter }));
 	}, [paginationNumber, filter]);
 
 	return (

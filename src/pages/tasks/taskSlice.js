@@ -14,8 +14,32 @@ export const postTaskStatus = createAsyncThunk(
 	}
 );
 
+export const fetchTasks = createAsyncThunk(
+	'task/fetchTasks',
+	async ({ userID, paginationNumber, filter }) => {
+		const pb = new PocketBase('http://127.0.0.1:8090');
+
+		let filterString = `userID = "${userID}"`;
+
+		if (filter === 'completed') {
+			filterString += ` && isCompleted = true`;
+		} else if (filter === 'unCompleted') {
+			filterString += ` && isCompleted = false`;
+		}
+
+		const resultList = await pb
+			.collection('tasks')
+			.getList(paginationNumber, 3, {
+				filter: filterString,
+			});
+
+		return resultList;
+	}
+);
+
 const initialState = {
 	value: [],
+	totalPages: 1,
 };
 
 export const taskSlice = createSlice({
@@ -38,7 +62,12 @@ export const taskSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(postTaskStatus.fulfilled, (state, action) => {});
+		builder
+			.addCase(fetchTasks.fulfilled, (state, action) => {
+				state.value = [...action.payload.items];
+				state.totalPages = action.payload.totalPages;
+			})
+			.addCase(postTaskStatus.fulfilled, (state, action) => {});
 	},
 });
 

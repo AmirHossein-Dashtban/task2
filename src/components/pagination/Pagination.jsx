@@ -9,7 +9,7 @@ import {
 import { useSelector } from 'react-redux';
 
 export default function Pagination({ paginationNumber, handleClick, href }) {
-	const paginationCount = useSelector((state) => state.page.value);
+	const paginationCount = useSelector((state) => state.task.totalPages);
 	const pageNumber = useParams().pageNumber.slice(4);
 
 	let from = pageNumber < 4 ? 0 : pageNumber - 3;
