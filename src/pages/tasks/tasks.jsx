@@ -22,24 +22,12 @@ export default function tasks() {
 	const paginationNumber = Number(useParams().pageNumber.slice(4));
 	const userInfo = getCookie(document.cookie);
 
-	const [totalPage, setTotalPage] = useState(0);
-
 	const handleLogout = () => {
 		document.cookie = `userToken=; expires=; path=/`;
 		document.cookie = `userID=; expires=; path=/`;
 		document.cookie = `userName=; expires=; path=/`;
 		document.cookie = `userPassword=; expires=; path=/`;
 	};
-
-	async function handleToggleTask(taskID, isCompleted) {
-		try {
-			await pb
-				.collection('tasks')
-				.update(taskID, { isCompleted: isCompleted });
-		} finally {
-			GetTasks();
-		}
-	}
 
 	async function GetTasks() {
 		let filterString = `userID = "${userInfo[2]}"`;
@@ -78,9 +66,7 @@ export default function tasks() {
 				></BoxHeader>
 				<Filter />
 
-				<TaskListContainer
-					onToggle={handleToggleTask}
-				></TaskListContainer>
+				<TaskListContainer></TaskListContainer>
 
 				<div
 					style={{

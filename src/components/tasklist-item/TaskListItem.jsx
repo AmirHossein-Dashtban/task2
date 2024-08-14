@@ -1,8 +1,18 @@
 import React from 'react';
 import './TaskListItem.css';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggle } from '../../pages/tasks/taskSlice';
+import { postTaskStatus } from '../../pages/tasks/taskSlice';
 
-export default function TaskList({ taskID, onToggle, children, checked }) {
+export default function TaskList({ taskID, children }) {
+	const dispatch = useDispatch();
+	const task = useSelector((state) =>
+		state.task.value.find((task) => taskID === task.id)
+	);
+
+	const taskStatus = task.isCompleted;
+
 	return (
 		<>
 			<li className="tasklist-item">
@@ -15,9 +25,21 @@ export default function TaskList({ taskID, onToggle, children, checked }) {
 					<input
 						className="tasklist-item__checkbox"
 						type="checkbox"
-						checked={checked}
+						checked={taskStatus}
 						onChange={(e) => {
-							onToggle(taskID, e.target.checked);
+							dispatch(
+								postTaskStatus({
+									taskID,
+									isCompleted: e.target.checked,
+								})
+							);
+
+							dispatch(
+								toggle({
+									taskID,
+									iscompleted: e.target.checked,
+								})
+							);
 						}}
 					/>
 				</div>
