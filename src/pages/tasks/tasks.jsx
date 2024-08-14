@@ -12,6 +12,7 @@ import Filter from '../../components/filter/filter';
 import getCookie from '../../lib/getCookie';
 import { useSelector, useDispatch } from 'react-redux';
 import { add } from './taskSlice';
+import { setPage } from './pageSlice';
 
 export default function tasks() {
 	const tasks = useSelector((state) => state.task.value);
@@ -57,7 +58,7 @@ export default function tasks() {
 				});
 			dispatch(add(resultList.items));
 
-			setTotalPage(resultList.totalPages);
+			dispatch(setPage(resultList.totalPages));
 		} catch (error) {}
 	}
 
@@ -95,7 +96,6 @@ export default function tasks() {
 						<Pagination
 							paginationNumber={paginationNumber}
 							itemsperPage={3}
-							paginationCount={totalPage}
 							handleClick={() => {}}
 							href={`/list/page`}
 						/>

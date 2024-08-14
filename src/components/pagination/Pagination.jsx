@@ -6,14 +6,10 @@ import {
 	PaginationArrowLeftIcon,
 	PaginationArrowRightIcon,
 } from '../../assets/icons';
+import { useSelector } from 'react-redux';
 
-export default function Pagination({
-	paginationNumber,
-	itemsperPage,
-	paginationCount,
-	handleClick,
-	href,
-}) {
+export default function Pagination({ paginationNumber, handleClick, href }) {
+	const paginationCount = useSelector((state) => state.page.value);
 	const pageNumber = useParams().pageNumber.slice(4);
 
 	let from = pageNumber < 4 ? 0 : pageNumber - 3;
@@ -25,9 +21,7 @@ export default function Pagination({
 		Map.push(i);
 	}
 
-	useEffect(() => {
-		handleClick(1);
-	}, [paginationNumber, paginationCount]);
+	useEffect(() => {}, [paginationNumber, paginationCount]);
 
 	return (
 		<section className="pagination-container">
@@ -43,7 +37,6 @@ export default function Pagination({
 				<ul className="pagination-list">
 					{Map.map((elem) => (
 						<li
-							// onClick={handleClick}
 							key={elem}
 							className={`pagination-item ${
 								elem + 1 == pageNumber &&
