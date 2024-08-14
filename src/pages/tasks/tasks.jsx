@@ -15,13 +15,13 @@ import { add } from './taskSlice';
 
 export default function tasks() {
 	const tasks = useSelector((state) => state.task.value);
+	const filter = useSelector((state) => state.filter.value);
 	const dispatch = useDispatch();
 	const pb = useContext(PocketBaseContext);
 	const paginationNumber = Number(useParams().pageNumber.slice(4));
 	const userInfo = getCookie(document.cookie);
 
 	const [totalPage, setTotalPage] = useState(0);
-	const [filter, setFilter] = useState('');
 
 	const handleLogout = () => {
 		document.cookie = `userToken=; expires=; path=/`;
@@ -43,9 +43,9 @@ export default function tasks() {
 	async function GetTasks() {
 		let filterString = `userID = "${userInfo[2]}"`;
 
-		if (filter === true) {
+		if (filter === 'completed') {
 			filterString += ` && isCompleted = true`;
-		} else if (filter === false) {
+		} else if (filter === 'unCompleted') {
 			filterString += ` && isCompleted = false`;
 		}
 
@@ -75,7 +75,7 @@ export default function tasks() {
 					]}
 					headingText={`${userInfo[0]}'s Tasks`}
 				></BoxHeader>
-				<Filter setFilter={setFilter} />
+				<Filter />
 
 				<TaskListContainer
 					onToggle={handleToggleTask}

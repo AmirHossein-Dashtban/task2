@@ -1,10 +1,12 @@
 import './filter.css';
 import { useState } from 'react';
 import { FilterIcon } from '../../assets/icons/index';
+import { showAll, completed, unCompleted } from '../../pages/tasks/filterSlice';
+import { useDispatch } from 'react-redux';
 
-export default function Filter({ setFilter }) {
+export default function Filter() {
 	const [showMenu, setShowMenu] = useState(false);
-
+	const dispatch = useDispatch();
 	return (
 		<div
 			className="filter-container"
@@ -17,9 +19,9 @@ export default function Filter({ setFilter }) {
 				className="filter-list"
 				style={{ display: showMenu ? 'block' : 'none' }}
 			>
-				<ul onClick={() => setFilter('')}>All</ul>
-				<ul onClick={() => setFilter(true)}>Completed</ul>
-				<ul onClick={() => setFilter(false)}>Not Completed</ul>
+				<ul onClick={() => dispatch(showAll())}>All</ul>
+				<ul onClick={() => dispatch(completed())}>Completed</ul>
+				<ul onClick={() => dispatch(unCompleted())}>Not Completed</ul>
 			</li>
 		</div>
 	);

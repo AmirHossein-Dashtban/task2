@@ -11,15 +11,15 @@ export const filterSlice = createSlice({
 		showAll: (state) => {
 			state.value = 'all';
 		},
-		showChcked: (state) => {
-			state.value = 'checked';
+		completed: (state) => {
+			state.value = 'completed';
 		},
-		showUnchecked: (state) => {
-			state.value = 'unchecked';
+		unCompleted: (state) => {
+			state.value = 'unCompleted';
 		},
 	},
 });
 
-export const { showAll, showChcked, showUnchecked } = filterSlice.actions;
+export const { showAll, completed, unCompleted } = filterSlice.actions;
 
 export default filterSlice.reducer;
