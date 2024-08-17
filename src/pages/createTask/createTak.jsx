@@ -1,5 +1,4 @@
 import './createTask.css';
-import { useContext } from 'react';
 import Box from '../../components/box-component/Box';
 import BoxHeader from '../../components/box-header/BoxHeader';
 import Input from '../../components/input/input';
@@ -8,30 +7,27 @@ import PageContainer from '../../components/page-container/page-container';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRightIcon } from '../../assets/icons/index';
-import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import getCookie from '../../lib/getCookie';
+import { postTask } from '../tasks/taskSlice';
+import { useDispatch } from 'react-redux';
 
 const CreateTask = () => {
-	const navigation = useNavigate();
-	const pb = useContext(PocketBaseContext);
 	const userInfo = getCookie(document.cookie);
-
-	async function AddTask(values) {
-		await pb.collection('tasks').create({
-			title: values.name,
-			priority: values.priority,
-			isCompleted: false,
-			userID: userInfo[2],
-		});
-	}
+	const dispatch = useDispatch();
 
 	return (
 		<PageContainer>
 			<Formik
 				initialValues={{ name: '', priority: '' }}
 				onSubmit={(values, { setSubmitting }) => {
-					AddTask(values);
-					navigation('/list/page1');
+					const x = dispatch(
+						postTask({
+							taskTitle: values.name,
+							isCompleted: false,
+							priority: values.priority,
+							userID: userInfo[2],
+						})
+					);
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import PocketBase from 'pocketbase';
 
+const pb = new PocketBase('http://127.0.0.1:8090');
+
 export const postTaskStatus = createAsyncThunk(
 	'task/postStatus',
 	async ({ taskID, isCompleted }) => {
-		const pb = new PocketBase('http://127.0.0.1:8090');
-
 		const response = await pb
 			.collection('tasks')
 			.update(taskID, { isCompleted });
@@ -17,8 +17,6 @@ export const postTaskStatus = createAsyncThunk(
 export const fetchTasks = createAsyncThunk(
 	'task/fetchTasks',
 	async ({ userID, paginationNumber, filter }) => {
-		const pb = new PocketBase('http://127.0.0.1:8090');
-
 		let filterString = `userID = "${userID}"`;
 
 		if (filter === 'completed') {
@@ -34,6 +32,21 @@ export const fetchTasks = createAsyncThunk(
 			});
 
 		return resultList;
+	}
+);
+
+export const postTask = createAsyncThunk(
+	'task/postTask',
+	async ({ taskTitle, isCompleted, priority, userID }) => {
+		const data = {
+			title: taskTitle,
+			isCompleted,
+			priority,
+			userID,
+		};
+		const record = await pb.collection('tasks').create(data);
+
+		return record;
 	}
 );
 
@@ -67,7 +80,8 @@ export const taskSlice = createSlice({
 				state.value = [...action.payload.items];
 				state.totalPages = action.payload.totalPages;
 			})
-			.addCase(postTaskStatus.fulfilled, (state, action) => {});
+			.addCase(postTaskStatus.fulfilled, (state, action) => {})
+			.addCase(postTask.fulfilled, (state, action) => {});
 	},
 });
 
