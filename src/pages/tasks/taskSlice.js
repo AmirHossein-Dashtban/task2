@@ -63,6 +63,13 @@ export const editTask = createAsyncThunk(
 	}
 );
 
+export const deleteTask = createAsyncThunk(
+	'task/deleteTask',
+	async ({ taskID }) => {
+		await pb.collection('tasks').delete(taskID);
+	}
+);
+
 const initialState = {
 	value: [],
 	totalPages: 1,
@@ -95,9 +102,8 @@ export const taskSlice = createSlice({
 			})
 			.addCase(postTaskStatus.fulfilled, (state, action) => {})
 			.addCase(postTask.fulfilled, (state, action) => {})
-			.addCase(editTask.fulfilled, (state, action) => {
-				console.log('succeed');
-			});
+			.addCase(editTask.fulfilled, (state, action) => {})
+			.addCase(deleteTask.fulfilled, (state, action) => {});
 	},
 });
 

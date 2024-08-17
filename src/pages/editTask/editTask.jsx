@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { editTask } from '../tasks/taskSlice';
+import { deleteTask, editTask } from '../tasks/taskSlice';
 
 const EditTak = () => {
 	const pb = useContext(PocketBaseContext);
@@ -18,9 +18,8 @@ const EditTak = () => {
 	const taskID = useParams().taskID;
 	const dispatch = useDispatch();
 
-	const handleDelete = async () => {
-		await pb.collection('tasks').delete(taskID);
-		navigation('/list/page1');
+	const handleDelete = () => {
+		dispatch(deleteTask({ taskID }));
 	};
 
 	return (
