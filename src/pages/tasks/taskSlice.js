@@ -50,6 +50,19 @@ export const postTask = createAsyncThunk(
 	}
 );
 
+export const editTask = createAsyncThunk(
+	'task/editTask',
+	async ({ taskID, title, priority }) => {
+		const data = {
+			title,
+			priority,
+		};
+
+		const record = await pb.collection('tasks').update(taskID, data);
+		return record;
+	}
+);
+
 const initialState = {
 	value: [],
 	totalPages: 1,
@@ -81,7 +94,10 @@ export const taskSlice = createSlice({
 				state.totalPages = action.payload.totalPages;
 			})
 			.addCase(postTaskStatus.fulfilled, (state, action) => {})
-			.addCase(postTask.fulfilled, (state, action) => {});
+			.addCase(postTask.fulfilled, (state, action) => {})
+			.addCase(editTask.fulfilled, (state, action) => {
+				console.log('succeed');
+			});
 	},
 });
 

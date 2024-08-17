@@ -9,11 +9,14 @@ import { Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
 import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { editTask } from '../tasks/taskSlice';
 
 const EditTak = () => {
 	const pb = useContext(PocketBaseContext);
 	const navigation = useNavigate();
 	const taskID = useParams().taskID;
+	const dispatch = useDispatch();
 
 	const handleDelete = async () => {
 		await pb.collection('tasks').delete(taskID);
@@ -25,16 +28,13 @@ const EditTak = () => {
 			<Formik
 				initialValues={{ name: '', priority: '' }}
 				onSubmit={async (values, { setSubmitting }) => {
-					console.log(values);
-
-					const data = {
-						title: values.name,
-						priority: values.priority,
-					};
-					const record = await pb
-						.collection('tasks')
-						.update(taskID, data);
-					navigation('/list/page1');
+					dispatch(
+						editTask({
+							taskID,
+							title: values.name,
+							priority: values.priority,
+						})
+					);
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
