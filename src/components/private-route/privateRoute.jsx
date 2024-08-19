@@ -1,16 +1,8 @@
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../../context/auth/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+import getCookie from "../../lib/getCookie";
 
 export default function PrivateRoute({ children }) {
-	const authContext = useContext(AuthContext);
-	const navigate = useNavigate();
+	const userToken = getCookie(document.cookie)[3];
 
-	useEffect(() => {
-		if (!authContext.isLogin) {
-			navigate('/login');
-		}
-	}, []);
-
-	return children;
+	return userToken ? children : <Navigate to='/login' replace />;
 }
