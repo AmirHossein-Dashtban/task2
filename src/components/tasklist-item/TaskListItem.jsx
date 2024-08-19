@@ -2,7 +2,6 @@ import React from "react";
 import "./TaskListItem.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toggle } from "../../pages/tasks/taskSlice";
 import { postTaskStatus } from "../../pages/tasks/taskSlice";
 
 export default function TaskList({ taskID, children }) {

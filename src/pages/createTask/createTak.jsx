@@ -1,24 +1,25 @@
-import './createTask.css';
-import Box from '../../components/box-component/Box';
-import BoxHeader from '../../components/box-header/BoxHeader';
-import Input from '../../components/input/input';
-import Button from '../../components/button/button';
-import PageContainer from '../../components/page-container/page-container';
-import { Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRightIcon } from '../../assets/icons/index';
-import getCookie from '../../lib/getCookie';
-import { postTask } from '../tasks/taskSlice';
-import { useDispatch } from 'react-redux';
+import "./createTask.css";
+import Box from "../../components/box-component/Box";
+import BoxHeader from "../../components/box-header/BoxHeader";
+import Input from "../../components/input/input";
+import Button from "../../components/button/button";
+import PageContainer from "../../components/page-container/page-container";
+import { Formik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { ArrowRightIcon } from "../../assets/icons/index";
+import getCookie from "../../lib/getCookie";
+import { postTask } from "../tasks/taskSlice";
+import { useDispatch } from "react-redux";
 
 const CreateTask = () => {
 	const userInfo = getCookie(document.cookie);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	return (
 		<PageContainer>
 			<Formik
-				initialValues={{ name: '', priority: '' }}
+				initialValues={{ name: "", priority: "" }}
 				onSubmit={(values, { setSubmitting }) => {
 					const x = dispatch(
 						postTask({
@@ -28,37 +29,38 @@ const CreateTask = () => {
 							userID: userInfo[2],
 						})
 					);
-				}}
-			>
+
+					navigate("/list/page1");
+				}}>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
 					<form onSubmit={handleSubmit}>
 						<Box>
 							<BoxHeader
-								headingText={'Task Manager'}
-								rightIcon={[<ArrowRightIcon />, '/list/page1']}
+								headingText={"Task Manager"}
+								rightIcon={[<ArrowRightIcon />, "/list/page1"]}
 							/>
 
-							<div className="inputs-container">
+							<div className='inputs-container'>
 								<Input
-									type={'text'}
-									name={'name'}
-									title={'name'}
+									type={"text"}
+									name={"name"}
+									title={"name"}
 									onChange={handleChange}
 									onBlur={handleBlur}
 									value={values.name}
 								/>
 								<Input
-									type={'text'}
-									name={'priority'}
-									title={'priority'}
+									type={"text"}
+									name={"priority"}
+									title={"priority"}
 									onChange={handleChange}
 									onBlur={handleBlur}
 									value={values.priority}
-									className={'priority-input'}
+									className={"priority-input"}
 								/>
 							</div>
 
-							<Button text={'Create'} type={'submit'} />
+							<Button text={"Create"} type={"submit"} />
 						</Box>
 					</form>
 				)}

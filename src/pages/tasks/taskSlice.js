@@ -73,48 +73,34 @@ export const deleteTask = createAsyncThunk(
 const initialState = {
 	value: [],
 	totalPages: 1,
+	status: "idle",
 };
 
 export const taskSlice = createSlice({
 	name: "task",
 	initialState,
-	reducers: {
-		add: (state, action) => {
-			state.value = action.payload;
-		},
-
-		toggle: (state, action) => {
-			state.value.map((task) => {
-				if (task.id !== action.payload.taskID) {
-					return task;
-				} else {
-					task.isCompleted = action.payload.iscompleted;
-					return task;
-				}
-			});
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchTasks.fulfilled, (state, action) => {
 				state.value = [...action.payload.items];
 				state.totalPages = action.payload.totalPages;
+				state.status = "succeeded";
 			})
 			.addCase(postTaskStatus.fulfilled, (state, action) => {
 				const index = state.value.findIndex(
 					(task) => task.id == action.payload.id
 				);
 
-				// console.log(JSON.stringify(state.value[index]));
-
 				state.value[index].isCompleted = action.payload.isCompleted;
 			})
 			.addCase(postTask.fulfilled, (state, action) => {})
 			.addCase(editTask.fulfilled, (state, action) => {})
+			.addCase(deleteTask.pending, (state, action) => {
+				state.status = "pending";
+			})
 			.addCase(deleteTask.fulfilled, (state, action) => {});
 	},
 });
-
-export const { add, toggle } = taskSlice.actions;
 
 export default taskSlice.reducer;
