@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Box from '../../components/box-component/Box';
+import { useSelector, useDispatch } from 'react-redux'
 import BoxHeader from '../../components/box-header/BoxHeader';
 import TaskListContainer from '../../components/tasklist-container/TaskListContainer';
 import Pagination from '../../components/pagination/Pagination';
@@ -7,18 +8,18 @@ import Button from '../../components/button/button';
 import { LogOutIcon, Plus } from '../../assets/icons/index';
 import PageContainer from '../../components/page-container/page-container';
 import PocketBaseContext from '../../context/pocketbase/PocketBaseContext';
-import { useParams } from 'react-router-dom';
 import Filter from '../../components/filter/filter';
 import getCookie from '../../lib/getCookie';
+import { fetchData } from '../../redux/tasks/asyncActions';
 
 export default function tasks() {
 	const pb = useContext(PocketBaseContext);
-	const paginationNumber = Number(useParams().pageNumber.slice(4));
 	const userInfo = getCookie(document.cookie);
+	const tasks = useSelector((state) => state.tasks.list);
+	const dispatch = useDispatch();
+	const filter = useSelector((state) => state.filter.filter);
+	const page = useSelector((state) => state.page.page);
 
-	const [tasks, setTasks] = useState([]);
-	const [totalPage, setTotalPage] = useState(0);
-	const [filter, setFilter] = useState('');
 
 	const handleLogout = () => {
 		document.cookie = `userToken=; expires=; path=/`;
@@ -27,39 +28,10 @@ export default function tasks() {
 		document.cookie = `userPassword=; expires=; path=/`;
 	};
 
-	async function handleToggleTask(taskID, isCompleted) {
-		try {
-			await pb
-				.collection('tasks')
-				.update(taskID, { isCompleted: isCompleted });
-		} finally {
-			GetTasks();
-		}
-	}
-
-	async function GetTasks() {
-		let filterString = `userID = "${userInfo[2]}"`;
-
-		if (filter === true) {
-			filterString += ` && isCompleted = true`;
-		} else if (filter === false) {
-			filterString += ` && isCompleted = false`;
-		}
-
-		try {
-			const resultList = await pb
-				.collection('tasks')
-				.getList(paginationNumber, 3, {
-					filter: filterString,
-				});
-			setTasks(resultList.items);
-			setTotalPage(resultList.totalPages);
-		} catch (error) {}
-	}
-
 	useEffect(() => {
-		GetTasks();
-	}, [paginationNumber, filter]);
+		dispatch(fetchData(filter, page));
+	}, [filter, page]);
+
 
 	return (
 		<PageContainer>
@@ -71,12 +43,10 @@ export default function tasks() {
 					]}
 					headingText={`${userInfo[0]}'s Tasks`}
 				></BoxHeader>
-				<Filter setFilter={setFilter} />
 
-				<TaskListContainer
-					tasks={tasks}
-					onToggle={handleToggleTask}
-				></TaskListContainer>
+				<Filter />
+
+				<TaskListContainer />
 
 				<div
 					style={{
@@ -89,13 +59,7 @@ export default function tasks() {
 					}}
 				>
 					{tasks.length !== 0 && (
-						<Pagination
-							paginationNumber={paginationNumber}
-							itemsperPage={3}
-							paginationCount={totalPage}
-							handleClick={() => {}}
-							href={`/list/page`}
-						/>
+						<Pagination />
 					)}
 
 					<Button text={`Task`} icon={<Plus />} link="/create" />

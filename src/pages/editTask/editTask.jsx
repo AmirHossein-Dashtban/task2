@@ -29,7 +29,7 @@ const EditTak = () => {
 					const record = await pb
 						.collection('tasks')
 						.update(taskID, data);
-					navigation('/list/page1');
+					navigation('/list');
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (

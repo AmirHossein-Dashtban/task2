@@ -21,7 +21,7 @@ const CreateTask = () => {
 			title: values.name,
 			priority: values.priority,
 			isCompleted: false,
-			userID: userInfo[2],
+			userId: userInfo[2],
 		});
 	}
 
@@ -31,7 +31,7 @@ const CreateTask = () => {
 				initialValues={{ name: '', priority: '' }}
 				onSubmit={(values, { setSubmitting }) => {
 					AddTask(values);
-					navigation('/list/page1');
+					navigation('/list');
 				}}
 			>
 				{({ handleBlur, handleChange, handleSubmit, values }) => (
@@ -39,7 +39,7 @@ const CreateTask = () => {
 						<Box>
 							<BoxHeader
 								headingText={'Task Manager'}
-								rightIcon={[<ArrowRightIcon />, '/list/page1']}
+								rightIcon={[<ArrowRightIcon />, '/list']}
 							/>
 
 							<div className="inputs-container">

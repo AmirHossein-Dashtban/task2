@@ -1,8 +1,11 @@
 import React from 'react';
 import './TaskListItem.css';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toggleTask } from '../../redux/tasks/asyncActions';
 
-export default function TaskList({ taskID, onToggle, children, checked }) {
+export default function TaskList({ taskID, children, checked }) {
+	const dispatch = useDispatch();
 	return (
 		<>
 			<li className="tasklist-item">
@@ -17,7 +20,7 @@ export default function TaskList({ taskID, onToggle, children, checked }) {
 						type="checkbox"
 						checked={checked}
 						onChange={(e) => {
-							onToggle(taskID, e.target.checked);
+							dispatch(toggleTask(taskID, e.target.checked))
 						}}
 					/>
 				</div>

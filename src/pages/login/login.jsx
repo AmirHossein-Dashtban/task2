@@ -30,7 +30,7 @@ const Login = () => {
 						document.cookie = `userName=${values.username}; expires=; path=/`;
 						document.cookie = `userPassword=${values.password}; expires=; path=/`;
 
-						navigation('/list/page1');
+						navigation('/list');
 					} catch (error) {
 						console.log(error);
 					}

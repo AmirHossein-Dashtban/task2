@@ -1,76 +1,73 @@
 import React from 'react';
 import './Pagination.css';
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
 import {
 	PaginationArrowLeftIcon,
 	PaginationArrowRightIcon,
 } from '../../assets/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { changePage } from '../../redux/tasks/asyncActions';
 
-export default function Pagination({
-	paginationNumber,
-	itemsperPage,
-	paginationCount,
-	handleClick,
-	href,
-}) {
-	const pageNumber = useParams().pageNumber.slice(4);
+export default function Pagination() {
 
-	let from = pageNumber < 4 ? 0 : pageNumber - 3;
-	let to = from + 5 < paginationCount ? from + 5 : paginationCount;
-
-	const Map = [];
-
-	for (let i = from; i < to; i++) {
-		Map.push(i);
-	}
-
-	useEffect(() => {
-		handleClick(1);
-	}, [paginationNumber, paginationCount]);
+	const paginationCount = useSelector((state) => state.tasks.totalPage);
+	const paginationNumber = useSelector((state) => state.page.page);
+	const dispatch = useDispatch();
 
 	return (
 		<section className="pagination-container">
-			{pageNumber != 1 && (
-				<div className="paginaton-left-icon">
-					<Link to={`/list/page${paginationNumber - 1}`}>
-						<PaginationArrowLeftIcon></PaginationArrowLeftIcon>
-					</Link>
-				</div>
-			)}
+
+			<div
+				style={paginationNumber != 1 ? { cursor: 'pointer' } : { opacity: 0.5 }}
+				onClick={() => { if (paginationNumber != 1) dispatch(changePage(paginationNumber - 1)) }}
+				className="paginaton-left-icon">
+				<PaginationArrowLeftIcon />
+			</div>
 
 			<div className="pagination-list__container">
 				<ul className="pagination-list">
-					{Map.map((elem) => (
+
+					{
+						paginationNumber != 1 &&
 						<li
-							// onClick={handleClick}
-							key={elem}
-							className={`pagination-item ${
-								elem + 1 == pageNumber &&
-								'pagination-item__selected'
-							}`}
+							key={paginationNumber - 1}
+							className={`pagination-item `}
+							onClick={() => dispatch(changePage(paginationNumber - 1))}
 						>
-							<Link
-								style={{
-									width: '100%',
-									height: '100%',
-								}}
-								to={`${href}${elem + 1}`}
-							>
-								{elem + 1}
-							</Link>
+
+							<a style={{ height: '100%', width: '100%' }}>{paginationNumber - 1}</a>
 						</li>
-					))}
+					}
+
+					<li
+						key={paginationNumber}
+						className={`pagination-item pagination-item__selected`}
+					>
+
+						<a style={{ height: '100%', width: '100%' }}>{paginationNumber}</a>
+					</li>
+
+					{
+						paginationNumber != paginationCount &&
+						<li
+							key={paginationNumber + 1}
+							className={`pagination-item `}
+							onClick={() => dispatch(changePage(paginationNumber + 1))}
+						>
+
+							<a style={{ height: '100%', width: '100%' }}>{paginationNumber + 1}</a>
+						</li>
+					}
+
 				</ul>
 			</div>
 
-			{paginationCount != pageNumber && (
-				<div className="paginaton-right-icon">
-					<Link to={`/list/page${paginationNumber + 1}`}>
-						<PaginationArrowRightIcon></PaginationArrowRightIcon>
-					</Link>
-				</div>
-			)}
-		</section>
+			<div
+				style={paginationNumber != paginationCount ? { cursor: 'pointer' } : { opacity: 0.5 }}
+				onClick={() => { if (paginationNumber != paginationCount) dispatch(changePage(paginationNumber + 1)) }}
+				className="paginaton-right-icon">
+				<PaginationArrowRightIcon />
+			</div>
+
+		</section >
 	);
 }

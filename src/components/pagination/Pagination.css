@@ -8,7 +8,6 @@
 .paginaton-left-icon,
 .paginaton-right-icon {
 	align-items: center;
-	cursor: pointer;
 	display: flex;
 	justify-content: center;
 }

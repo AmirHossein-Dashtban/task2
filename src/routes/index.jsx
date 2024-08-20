@@ -13,7 +13,7 @@ const router = createBrowserRouter(
             <Route index element={<Login />} />
             <Route path="login" element={<Login />} />
             <Route element={<Protected />}>
-                <Route path="list/:pageNumber" element={<Tasks />} />
+                <Route path="list" element={<Tasks />} />
                 <Route path="create" element={<CreateTask />} />
                 <Route path="edit/:taskID" element={<EditTask />} />
             </Route>
